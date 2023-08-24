@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2272DFE2A9715FC005A98F4 /* RMSearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2272DFD2A9715FC005A98F4 /* RMSearchResultViewModel.swift */; };
 		C238A5F729C49D5300F4DC09 /* RMCharacterListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238A5F629C49D5300F4DC09 /* RMCharacterListViewViewModel.swift */; };
 		C238A5F929C49DC500F4DC09 /* RMCharacterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238A5F829C49DC500F4DC09 /* RMCharacterListView.swift */; };
 		C238A5FB29C4A94B00F4DC09 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238A5FA29C4A94B00F4DC09 /* Extensions.swift */; };
@@ -75,6 +76,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C2272DFD2A9715FC005A98F4 /* RMSearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchResultViewModel.swift; sourceTree = "<group>"; };
 		C238A5F629C49D5300F4DC09 /* RMCharacterListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterListViewViewModel.swift; sourceTree = "<group>"; };
 		C238A5F829C49DC500F4DC09 /* RMCharacterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterListView.swift; sourceTree = "<group>"; };
 		C238A5FA29C4A94B00F4DC09 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				C24509E02A84DC0700B5B6DC /* RMSearchViewViewModel.swift */,
 				C24509E52A84DE6400B5B6DC /* RMNoSearchResultsViewViewModel.swift */,
 				C24509EB2A84DF8E00B5B6DC /* RMSearchInputViewViewModel.swift */,
+				C2272DFD2A9715FC005A98F4 /* RMSearchResultViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				C2F690F629C0AF00008A6316 /* RMCharacterViewController.swift in Sources */,
 				C2CBBA882A80B0290058A83C /* RMLocationView.swift in Sources */,
 				C286157F2A5DA96C00E3CF85 /* RMEpisodeListViewViewModel.swift in Sources */,
+				C2272DFE2A9715FC005A98F4 /* RMSearchResultViewModel.swift in Sources */,
 				C28615762A1E18A300E3CF85 /* RMAPICacheManager.swift in Sources */,
 				C28615812A5DABEC00E3CF85 /* RMGetAllEpisodesResponse.swift in Sources */,
 				C28615892A5EA39E00E3CF85 /* RMEpisodeInfoCollectionViewCellViewModel.swift in Sources */,
