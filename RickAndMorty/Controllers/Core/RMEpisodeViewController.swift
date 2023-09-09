@@ -15,7 +15,7 @@ final class RMEpisodeViewController: UIViewController, RMEpisodeListViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "Characters"
+        title = "Episodes"
         setUpView()
         addSearchButton()
     }
@@ -44,7 +44,7 @@ final class RMEpisodeViewController: UIViewController, RMEpisodeListViewDelegate
     
     //MARK: - RMEpisodeListViewDelegate
     
-    func rmEpisodeListView(_ episodeListView: RMEpisodeListView, didSelectCharacter episode: RMEpisode) {
+    func rmEpisodeListView(_ episodeListView: RMEpisodeListView, didSelectEpisode episode: RMEpisode) {
         // Open detail controller for that episode
         let detailVC = RMEpisodeDetailViewController(url: URL(string: episode.url))
         detailVC.navigationItem.largeTitleDisplayMode = .never

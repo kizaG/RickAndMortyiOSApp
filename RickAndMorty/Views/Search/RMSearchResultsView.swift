@@ -48,7 +48,10 @@ final class RMSearchResultsView: UIView {
         return collectionView
     }()
     
+    /// TableView viewModels
     private var locationCellViewModels: [RMLocationTableViewCellViewModel] = []
+    
+    /// CollectionView viewModels
     private var collectionViewCellViewModels: [any Hashable] = []
     
     //MARK: - Init
@@ -70,7 +73,7 @@ final class RMSearchResultsView: UIView {
             return
         }
         
-        switch viewModel {
+        switch viewModel.results {
         case .characters(let viewModels):
             self.collectionViewCellViewModels = viewModels
             setUpCollectionView()
@@ -201,10 +204,110 @@ extension RMSearchResultsView: UICollectionViewDelegate, UICollectionViewDataSou
         }
         
         // Episode
-        let width = (bounds.width-30)/2
+        let width = (bounds.width-15)
         return CGSize(
-            width: width,
-            height: width*1.5)
+            width: collectionView.frame.width,
+            height: 100
+        )
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionFooter,
+              let footer = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier,
+                for: indexPath
+              ) as? RMFooterLoadingCollectionReusableView else {
+            fatalError("Unsupported")
+        }
+        if let viewModel = viewModel, viewModel.shouldShowLoadMoreIndicator {
+            footer.startAnimating()
+        }
+        return footer
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard let viewModel = viewModel,
+              viewModel.shouldShowLoadMoreIndicator else {
+            return .zero
+        }
+        return CGSize(width: collectionView.frame.width,
+                      height: 100)
+    }
+}
+
+//MARK: - ScrollViewDelegate
+
+extension RMSearchResultsView: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !locationCellViewModels.isEmpty {
+            handleLocationPagination(scrollView: scrollView)
+        } else {
+            // CollectionView
+            handleCharacterOrEpisodePagination(scrollView: scrollView)
+        }
+        
+    }
+    
+    private func handleCharacterOrEpisodePagination(scrollView: UIScrollView) {
+        guard let viewModel = viewModel,
+              !collectionViewCellViewModels.isEmpty,
+              viewModel.shouldShowLoadMoreIndicator,
+              !viewModel.isLoadingMoreResults else {
+            return
+        }
+        
+        
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] t in
+            let offset = scrollView.contentOffset.y
+            let totalContentHeight = scrollView.contentSize.height
+            let totalScrollViewFixedHeight = scrollView.frame.size.height
+            
+            if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
+                viewModel.fetchAdditionalResults { [weak self] newResults in
+                    // Refresh table
+                    self?.tableView.tableFooterView = nil
+                    self?.collectionViewCellViewModels = newResults
+                    
+                    print("Should add more results cells for search results: \(newResults.count)")
+                }
+            }
+            t.invalidate()
+        }
+    }
+    
+    private func handleLocationPagination(scrollView: UIScrollView) {
+        guard let viewModel = viewModel,
+              !locationCellViewModels.isEmpty,
+              viewModel.shouldShowLoadMoreIndicator,
+              !viewModel.isLoadingMoreResults else {
+            return
+        }
+        
+        
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] t in
+            let offset = scrollView.contentOffset.y
+            let totalContentHeight = scrollView.contentSize.height
+            let totalScrollViewFixedHeight = scrollView.frame.size.height
+            
+            if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
+                DispatchQueue.main.async {
+                    self?.showTableLoadingIndicator()
+                }
+                viewModel.fetchAdditionalLocations { [weak self] newResults in
+                    // Refresh table
+                    self?.tableView.tableFooterView = nil
+                    self?.locationCellViewModels = newResults
+                    self?.tableView.reloadData()
+                }
+            }
+            t.invalidate()
+        }
+    }
+    
+    private func showTableLoadingIndicator() {
+        let footer = RMTableLoadingFooterView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: 100))
+        tableView.tableFooterView = footer
     }
 }

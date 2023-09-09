@@ -77,11 +77,13 @@ final class RMLocationView: UIView {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
+            // spinner
             spinner.heightAnchor.constraint(equalToConstant: 100),
             spinner.widthAnchor.constraint(equalToConstant: 100),
             spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
             
+            // tableView
             tableView.topAnchor.constraint(equalTo: topAnchor),
             tableView.leftAnchor.constraint(equalTo: leftAnchor),
             tableView.rightAnchor.constraint(equalTo: rightAnchor),

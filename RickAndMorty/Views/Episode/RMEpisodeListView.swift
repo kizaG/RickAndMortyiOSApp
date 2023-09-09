@@ -11,7 +11,7 @@ import UIKit
 protocol RMEpisodeListViewDelegate: AnyObject {
     func rmEpisodeListView(
         _ characterListView: RMEpisodeListView,
-        didSelectCharacter episode: RMEpisode
+        didSelectEpisode episode: RMEpisode
     )
 }
 
@@ -99,8 +99,7 @@ extension RMEpisodeListView: RMEpisodeListViewViewModelDelegate {
     }
     
     func didSelectEpisode(_ episode: RMEpisode) {
-//        delegate?.rmCharacterListView(self, didSelectCharacter: character)
-        delegate?.rmEpisodeListView(self, didSelectCharacter: episode)
+        delegate?.rmEpisodeListView(self, didSelectEpisode: episode)
     }
    
 }
