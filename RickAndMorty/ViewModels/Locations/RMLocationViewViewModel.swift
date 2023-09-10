@@ -62,8 +62,6 @@ final class RMLocationViewViewModel {
         
         isLoadingMoreLocations = true
         
-        
-        
         guard let request = RMRequest(url: url) else {
             isLoadingMoreLocations = false
             return

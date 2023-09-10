@@ -16,7 +16,6 @@ final class RMSearchResultViewModel {
     init(results: RMSearchResultType, next: String?) {
         self.results = results
         self.next = next
-        print(next)
     }
     
     public private(set) var isLoadingMoreResults = false
@@ -98,7 +97,7 @@ final class RMSearchResultViewModel {
         
         switch results {
         case .characters(let existingResults):
-            RMService.shared.execute(request, expecting: RMGetAllCharacteresResponse.self) { [weak self] result in
+            RMService.shared.execute(request, expecting: RMGetAllCharactersResponse.self) { [weak self] result in
                 guard let strongSelf = self else {
                     return
                 }

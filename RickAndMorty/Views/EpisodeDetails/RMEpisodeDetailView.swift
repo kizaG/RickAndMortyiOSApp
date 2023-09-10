@@ -205,7 +205,7 @@ extension RMEpisodeDetailView {
     func createCharacterLayout() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(0.5),
+                widthDimension: .fractionalWidth(UIDevice.isIphone ? 0.5 : 0.25),
                 heightDimension: .fractionalHeight(1.0)
             )
         )
@@ -219,9 +219,9 @@ extension RMEpisodeDetailView {
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(260)
+                heightDimension: .absolute(UIDevice.isIphone ? 260 : 320)
             ),
-            subitems: [item, item]
+            subitems: UIDevice.isIphone ? [item, item] : [item, item, item, item]
         )
         let section = NSCollectionLayoutSection(group: group)
         return section

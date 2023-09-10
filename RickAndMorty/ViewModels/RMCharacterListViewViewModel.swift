@@ -38,13 +38,13 @@ final class RMCharacterListViewViewModel: NSObject {
     
     private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = []
     
-    private var apiInfo: RMGetAllCharacteresResponse.Info? = nil
+    private var apiInfo: RMGetAllCharactersResponse.Info? = nil
     
     /// Fetch initial set of characters (20)
     public func fetchCharacters() {
         RMService.shared.execute(
             .listCharactersRequests,
-            expecting: RMGetAllCharacteresResponse.self
+            expecting: RMGetAllCharactersResponse.self
         ) { [weak self] result in
             switch result {
             case .success(let responseModel):
@@ -73,7 +73,7 @@ final class RMCharacterListViewViewModel: NSObject {
             return
         }
         
-        RMService.shared.execute(request, expecting: RMGetAllCharacteresResponse.self) { [weak self] result in
+        RMService.shared.execute(request, expecting: RMGetAllCharactersResponse.self) { [weak self] result in
             guard let strongSelf = self else {
                 return
             }
@@ -90,7 +90,6 @@ final class RMCharacterListViewViewModel: NSObject {
                 let indexPathsToAdd: [IndexPath] = Array(startingIndex..<(startingIndex+newCount)).compactMap({
                     return IndexPath(row: $0, section: 0)
                 })
-                
                 strongSelf.characters.append(contentsOf: moreResults)
                 DispatchQueue.main.async {
                     strongSelf.delegate?.didLoadMoreCharacters(
@@ -152,12 +151,9 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        // TODO: Abstract to extension
-        let isIphone = UIDevice.current.userInterfaceIdiom == .phone
-        
         let bounds = collectionView.bounds
         let width: CGFloat
-        if isIphone {
+        if UIDevice.isIphone {
             width = (bounds.width-30)/2
         } else {
             // mac | ipad

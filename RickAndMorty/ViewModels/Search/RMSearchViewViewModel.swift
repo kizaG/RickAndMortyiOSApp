@@ -65,7 +65,7 @@ final class RMSearchViewViewModel {
         
         switch config.type.endpoint {
         case .character:
-            makeSearchAPICall(RMGetAllCharacteresResponse.self, request: request)
+            makeSearchAPICall(RMGetAllCharactersResponse.self, request: request)
         case .episode:
             makeSearchAPICall(RMGetAllEpisodesResponse.self, request: request)
         case .location:
@@ -91,7 +91,7 @@ final class RMSearchViewViewModel {
     private func processSearchResults(model: Codable) {
         var resultsVM: RMSearchResultType?
         var nextUrl: String?
-        if let charactersResults = model as? RMGetAllCharacteresResponse {
+        if let charactersResults = model as? RMGetAllCharactersResponse {
             resultsVM = .characters(charactersResults.results.compactMap({
                 return RMCharacterCollectionViewCellViewModel(
                     characterName: $0.name,
@@ -148,6 +148,20 @@ final class RMSearchViewViewModel {
     
     public func locationSearchResult(at index: Int) -> RMLocation? {
         guard let searchModel = searchResultModel as? RMGetAllLocationsResponse else {
+            return nil
+        }
+        return searchModel.results[index]
+    }
+    
+    public func characterSearchResult(at index: Int) -> RMCharacter? {
+        guard let searchModel = searchResultModel as? RMGetAllCharactersResponse else {
+            return nil
+        }
+        return searchModel.results[index]
+    }
+    
+    public func episodeSearchResult(at index: Int) -> RMEpisode? {
+        guard let searchModel = searchResultModel as? RMGetAllEpisodesResponse else {
             return nil
         }
         return searchModel.results[index]
